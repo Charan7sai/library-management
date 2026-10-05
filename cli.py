@@ -1,6 +1,7 @@
 import crud
 import loans
 import search
+import reports
 
 def ask_int(prompt):
     while True:
@@ -135,6 +136,13 @@ def search_genre():
     for b in search.search_by_genre(input("Genre: ").strip()):
         print(f"{b['title']} by {b['author']}")
 
+def show_reports():
+    for r in reports.most_borrowed_books():
+        print(f"{r['title']}: {r['timesBorrowed']} loans")
+    print("--- Overdue ---")
+    for r in reports.overdue_loans():
+        print(f"{r['title']} | {r['member']} | {r['daysOverdue']} days overdue")
+
 
 MENU = {
     "1": ("Add book", add_book),
@@ -152,6 +160,7 @@ MENU = {
     "13": ("Member's active loans", member_active_loans),
     "14": ("Search title/author", search_text),
     "15": ("Search by genre", search_genre),
+    "16": ("Reports (popular and overdue)", show_reports),
     "0": ("Exit", None),
 }
 
