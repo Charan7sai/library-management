@@ -1,6 +1,6 @@
 import crud
 import loans
-
+import search
 
 def ask_int(prompt):
     while True:
@@ -126,6 +126,15 @@ def member_active_loans():
     for title, due in items:
         print(f"{title} | due {due.strftime('%d-%m-%Y')}")
 
+def search_text():
+    for b in search.text_search(input("Search title/author: ").strip()):
+        print(f"{b['title']} by {b['author']} | {', '.join(b['genres'])}")
+
+
+def search_genre():
+    for b in search.search_by_genre(input("Genre: ").strip()):
+        print(f"{b['title']} by {b['author']}")
+
 
 MENU = {
     "1": ("Add book", add_book),
@@ -141,6 +150,8 @@ MENU = {
     "11": ("Issue book", issue_book),
     "12": ("Return book", return_book),
     "13": ("Member's active loans", member_active_loans),
+    "14": ("Search title/author", search_text),
+    "15": ("Search by genre", search_genre),
     "0": ("Exit", None),
 }
 
