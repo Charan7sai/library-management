@@ -1,4 +1,5 @@
 import crud
+import loans
 
 
 def ask_int(prompt):
@@ -108,6 +109,23 @@ def delete_member():
     crud.delete_member(input("Email to delete: ").strip())
     print("Member deleted.")
 
+def issue_book():
+    due = loans.issue_book(input("Book ISBN: ").strip(), input("Member email: ").strip())
+    print("Book issued. Due on", due.strftime("%d-%m-%Y"))
+
+
+def return_book():
+    fine = loans.return_book(input("Book ISBN: ").strip(), input("Member email: ").strip())
+    print("Book returned.", f"Fine: ₹{fine}" if fine else "No fine.")
+
+
+def member_active_loans():
+    items = loans.active_loans(input("Member email: ").strip())
+    if not items:
+        print("No active loans.")
+    for title, due in items:
+        print(f"{title} | due {due.strftime('%d-%m-%Y')}")
+
 
 MENU = {
     "1": ("Add book", add_book),
@@ -120,6 +138,9 @@ MENU = {
     "8": ("List members", list_members),
     "9": ("Update member", update_member),
     "10": ("Delete member", delete_member),
+    "11": ("Issue book", issue_book),
+    "12": ("Return book", return_book),
+    "13": ("Member's active loans", member_active_loans),
     "0": ("Exit", None),
 }
 
